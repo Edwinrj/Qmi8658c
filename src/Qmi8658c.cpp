@@ -90,7 +90,7 @@ uint8_t Qmi8658c::qmi8658_read(uint8_t reg) {
         // Wait
         // timout for breaking the loop
         if (millis() - startTime > 1000) 
-         return;
+         break;
     }
 
     // Read data from the register
@@ -189,6 +189,22 @@ Qmi8658c::Qmi8658c(uint8_t deviceAdress, uint32_t deviceFrequency) {
 
     // initiate IIC bus
     Wire.begin(); // start IIC bus
+    Wire.setClock(deviceFrequency);
+}
+
+Qmi8658c::Qmi8658c(uint8_t deviceAdress, uint32_t deviceFrequency, int _sda, int _scl) {
+    this->deviceFrequency = deviceFrequency;
+    this->deviceAdress = deviceAdress;
+
+    // clear context
+    memset(&qmi_ctx, 0, sizeof(qmi_ctx_t));
+    qmi_ctx.acc_scale = acc_scale_2g;
+    qmi_ctx.acc_sensitivity = ACC_SCALE_SENSITIVITY_2G;
+    qmi_ctx.gyro_scale = gyro_scale_16dps;
+    qmi_ctx.gyro_sensitivity = GYRO_SCALE_SENSITIVITY_16DPS;
+
+    // initiate IIC bus
+    Wire.begin(_sda,_scl); // start IIC bus
     Wire.setClock(deviceFrequency);
 }
 

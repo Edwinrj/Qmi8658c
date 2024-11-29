@@ -182,6 +182,7 @@ private:
     
 public:
     Qmi8658c(uint8_t deviceAdress, uint32_t deviceFrequency); // Constructor for Qmi8658c class.
+    Qmi8658c(uint8_t deviceAdress, uint32_t deviceFrequency, int _sda, int _scl) // Constructor for Qmi8658c class.
     qmi8658_result_t open(qmi8658_cfg_t* qmi8658_cfg);        // Open communication with the Qmi8658c and configures it.
     void read(qmi_data_t* data);                              // Read data from the Qmi8658c.
     qmi8658_result_t close(void);                             // Close communication with the Qmi8658c.
